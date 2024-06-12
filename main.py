@@ -27,9 +27,6 @@ class Car(Vehicle):
         return f"Car\t{self.brand}\t{self.model}\t{self.year}\t{self.color}\t{self.price}\t{self.doors}"
         
 
-            
-
-
 class Inventory:
     data: List[Vehicle] = []
     
@@ -50,6 +47,24 @@ class Inventory:
         with open(self.file, 'a') as inventory_file:
             inventory_file.write('\n'+str(vehicle))
         self.data.append(vehicle)
+        
+    def search(self, vehicle):
+        return vehicle in self.data
+
+    def remove(self, vehicle):
+        if self.search(vehicle) == True:
+            with open(self.file, "r") as f:
+                lines = f.readlines()
+            with open(self.file, "w") as f:
+                for line in lines:
+                    if line.strip("\n") != vehicle:
+                        f.write(line)
+                        
+            self.data.remove(vehicle)
+        else:
+            pass
+            
+        
                 
     def __repr__(self):
         output = ''
@@ -58,6 +73,11 @@ class Inventory:
             output += '\n' + str(row)
         return output
             
+# inventory = Inventory('inventory.tsv')
+# inventory.remove(Car('Honda', 'Civic', '2020', 'White', '28000', '4'))
+# print(inventory)
+print(Car('Honda', 'Civic', '2020', 'White', '28000', '4'))
 inventory = Inventory('inventory.tsv')
-inventory.add(Car('Aoodi', 'A1', '1900', 'Gray', '20000', '4'))
-print(inventory)
+print(inventory.search(Car('Honda', 'Civic', '2020', 'White', '28000', '4')))
+
+
