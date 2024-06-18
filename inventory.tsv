@@ -1,5 +1,4 @@
 type	brand	model	year	color	price	doors
-Car	Honda	Civic	2020	White	28000	4
 Motorcycle	Harley	Davidson	Street Glide	23000	Red	n/a
 Car	Toyota	Camry	2019	Silver	25000	4
 Car	Ford	Mustang	2018	Black	32000	2
@@ -19,3 +18,4 @@ Car	Kia	Optima	2019	Blue	24000	4
 Motorcycle	Triumph	Bonneville	2018	Red	13000	n/a
 Car	Mercedes	E-Class	2021	Silver	60000	4
 Car	Audi	A4	2022	Gray	42000	4
+Car	Honda	Civic	2020	White	28000	4

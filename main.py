@@ -5,8 +5,8 @@ import csv
 
 class Vehicle:
     def __init__(self, brand, model, year, color, price):
-        self.model = model
         self.brand = brand
+        self.model = model
         self.year = year
         self.color = color
         self.price = price
@@ -14,6 +14,16 @@ class Vehicle:
 class Motorcycle(Vehicle):
     def __init__(self, brand, model, year, color, price):
         super().__init__(brand, model, year, color, price)
+    def __eq__(self, other):
+        if isinstance(other, Car):
+            return False
+        elif not isinstance(other, Motorcycle):
+            return NotImplemented
+        return (self.brand == other.brand and
+                self.model == other.model and
+                self.year == other.year and
+                self.color == other.color and
+                self.price == other.price)
     def __repr__(self):
         return f"Motorcycle\t{self.brand}\t{self.model}\t{self.year}\t{self.color}\t{self.price}\tn/a"
         
@@ -21,8 +31,17 @@ class Car(Vehicle):
     def __init__(self, brand, model, year, color, price, doors):
         super().__init__(brand, model, year, color, price)
         self.doors = doors
-    def foo(self):
-        print(f"foo: {self.model}")
+    def __eq__(self, other):
+        if isinstance(other, Motorcycle):
+            return False
+        elif not isinstance(other, Car):
+            return NotImplemented
+        return (self.brand == other.brand and
+                self.model == other.model and
+                self.year == other.year and
+                self.color == other.color and
+                self.price == other.price and
+                self.doors == other.doors)   
     def __repr__(self):
         return f"Car\t{self.brand}\t{self.model}\t{self.year}\t{self.color}\t{self.price}\t{self.doors}"
         
@@ -49,23 +68,51 @@ class Inventory:
         self.data.append(vehicle)
         
     def search(self, vehicle):
-        return vehicle in self.data
-
-    def remove(self, vehicle):
-        if self.search(vehicle) == True:
-            with open(self.file, "r") as f:
-                lines = f.readlines()
-            with open(self.file, "w") as f:
-                for line in lines:
-                    if line.strip("\n") != vehicle:
-                        f.write(line)
-                        
-            self.data.remove(vehicle)
-        else:
-            pass
-            
+        for pos, v in enumerate(self.data):
+            if v == vehicle:
+                return pos
+        return -1
+    
+    def search_attribute(self, **attributes):
+        out=[]
         
-                
+        for v in self.data:
+            if 'type' in attributes.keys():
+                if not isinstance(v, attributes['type']):
+                    continue
+            if 'brand' in attributes.keys():
+                if not v.brand == attributes['brand']:
+                    continue
+            if 'model' in attributes.keys():
+                if not v.model == attributes['model']:
+                    continue
+            if 'year' in attributes.keys():
+                if not v.year == attributes['year']:
+                    continue
+            if 'color' in attributes.keys():
+                if not v.color == attributes['color']:
+                    continue
+            if 'price' in attributes.keys():
+                if not v.price == attributes['price']:
+                    continue
+            if 'doors' in attributes.keys():
+                if isinstance(v, Car):
+                    if not v.doors == attributes['doors']:
+                        continue
+                if isinstance(v, Motorcycle):
+                    continue
+            
+            out.append(v)
+        
+        return out
+    
+    def remove(self, vehicle):
+        if self.search(vehicle) != -1:
+            self.data.remove(vehicle)
+            with open(self.file, "w") as f:
+                f.write(self.__repr__())
+
+
     def __repr__(self):
         output = ''
         output += 'type\tbrand\tmodel\tyear\tcolor\tprice\tdoors'
@@ -73,11 +120,8 @@ class Inventory:
             output += '\n' + str(row)
         return output
             
-# inventory = Inventory('inventory.tsv')
-# inventory.remove(Car('Honda', 'Civic', '2020', 'White', '28000', '4'))
-# print(inventory)
-print(Car('Honda', 'Civic', '2020', 'White', '28000', '4'))
 inventory = Inventory('inventory.tsv')
-print(inventory.search(Car('Honda', 'Civic', '2020', 'White', '28000', '4')))
+print(inventory.search_attribute(type=Car, doors='2', color='Black'))
+
 
 
