@@ -121,57 +121,73 @@ class Inventory:
         return output
 
 inventory = Inventory('inventory.tsv')
-print(inventory.search_attribute(type = Car, brand = 'Honda'))
+# inventory. removeItem(Car('Honda', 'Pilot', '2025', 'Black', '39900', '4'))
+# print(inventory.data)
 
-# print('''Welcome to your vehicle inventory...
-#       You may add, remove or search for cars or motorcycles.
-#       (Please enter with a capitalized first letter)''')   
-# while True: 
+print('''Welcome to your vehicle inventory...
+      You may add, remove or search for cars or motorcycles.
+      (Please enter with a capitalized first letter)''')   
+while True: 
     
-#     ask = input('')
+    ask = input('')
     
-#     while ask == 'add' or 'Add':
-#         typee = input('Type: ')
-#         brand = input('Brand: ')
-#         model = input('Model: ')
-#         year = input('Year: ')
-#         color = input('Color: ')
-#         price = input('Price: ')
-#         if typee == 'car' or 'Car':
-#             doors = input('Doors: ')
-#             inventory.addItem(Car(brand, model, year, color, price, doors))
-#         elif typee == 'motorcycle' or 'Motorcycle':
-#             inventory.addItem(Motorcycle(brand, model, year, color, price, 'n/a'))
+    if ask == 'add' or 'Add':
+        type = input('Type: ')
+        brand = input('Brand: ')
+        model = input('Model: ')
+        year = input('Year: ')
+        color = input('Color: ')
+        price = input('Price: ')
+        if type == 'car' or 'Car':
+            doors = input('Doors: ')
+            inventory.addItem(Car(brand, model, year, color, price, doors))
+        elif type == 'motorcycle' or 'Motorcycle':
+            inventory.addItem(Motorcycle(brand, model, year, color, price, 'n/a'))
             
-#         ask = input('')
-
-#     while ask == 'remove' or 'Remove':
-#         typee = input('Type: ')
-#         brand = input('Brand: ')
-#         model = input('Model: ')
-#         year = input('Year: ')
-#         color = input('Color: ')
-#         price = input('Price: ')
-#         if typee == 'car' or 'Car':
-#             doors = input('Doors: ')
-#             inventory.removeItem(Car(brand, model, year, color, price, doors))
-#         elif typee == 'motorcycle' or 'Motorcycle':
-#             inventory.removeItem(Motorcycle(brand, model, year, color, price, 'n/a'))
+        continue
+    elif ask == 'remove' or 'Remove':
+        type = input('Type: ')
+        brand = input('Brand: ')
+        model = input('Model: ')
+        year = input('Year: ')
+        color = input('Color: ')
+        price = input('Price: ')
+        if type == 'car' or 'Car':
+            doors = input('Doors: ')
+            inventory.removeItem(Car(brand, model, year, color, price, doors))
+        elif type == 'motorcycle' or 'Motorcycle':
+            inventory.removeItem(Motorcycle(brand, model, year, color, price, 'n/a'))
         
-#         ask = input('')
+        continue
+    elif ask == 'search' or 'Search':
+        attributes = []
+        print('Enter n/a if the attribut is unknown')
+        Type = input('Type: ')
+        if Type != 'n/a':
+            if Type == 'Car':
+                attributes.append(type = Car)
+            elif Type == 'Motorcycle':
+                attributes.append(type = Motorcycle)
+        Brand = input('Brand: ')
+        if Brand != 'n/a':
+            attributes.append(brand = Brand)
+        Model = input('Model: ')
+        if Model != 'n/a':
+            attributes.append(model = Model)
+        Year = input('Year: ')
+        if Year != 'n/a':
+            attributes.append(year = Year)
+        Color = input('Color: ')
+        if Color != 'n/a':
+            attributes.append(color = Color)
+        Price = input('Price: ')
+        if Price != 'n/a':
+            attributes.append(price = Price)
+        Doors = input('Doors: ')
+        if Doors != 'n/a':
+            attributes.append(doors = Doors)
+        inventory.search_attribute(str(attributes)[1:-1])
 
-#     while ask == 'search' or 'Search':
-#         print('Enter n/a if the attribut eis unknown')
-#         typee = input('Type: ')
-#         brand = input('Brand: ')
-#         model = input('Model: ')
-#         year = input('Year: ')
-#         color = input('Color: ')
-#         price = input('Price: ')
-#         if typee == 'car' or 'Car':
-#             doors = input('Doors: ')
-#             inventory.search_attribute(Car(brand, model, year, color, price, doors))
-#         elif typee == 'motorcycle' or 'Motorcycle':
-#             inventory.search_attribute(Motorcycle(brand, model, year, color, price, 'n/a'))
-        
-#         ask = input('')
+        continue
+    elif ask == 'done' or 'Done':
+        break
