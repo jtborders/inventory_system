@@ -131,7 +131,7 @@ You may add, remove or search for cars or motorcycles.
 ''')   
 
 
-ask = input('Would you like to add, remove or search for a vehicle. \n')
+ask = input('Would you like to view your inventory, add, remove, search for a vehicle. \n')
 
 if ask == 'add':
     type = input('Type: ')
@@ -188,5 +188,9 @@ if ask == 'search':
         attributes['doors'] = Doors
     results = inventory.search_attribute(**attributes)
     print(stringify_vehicles(results))
+    
+if ask == 'view':
+    print(inventory)
+    
 
     
