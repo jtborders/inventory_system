@@ -75,10 +75,11 @@ class Inventory:
     
     def search_attribute(self, **attributes):
         out=[]
-        if attributes['type'] != Car and attributes['type'] != Motorcycle and 'type' in attributes.keys():
-            return []
+        
         for v in self.data:
             if 'type' in attributes.keys():
+                # if attributes['type'] != Car and attributes['type'] != Motorcycle:
+                #     return []
                 if not isinstance(v, attributes['type']):
                     continue
             if 'brand' in attributes.keys():
@@ -115,7 +116,7 @@ class Inventory:
 
 
     def __repr__(self):
-        stringify_vehicles(self.data)
+        return stringify_vehicles(self.data)
         
 def stringify_vehicles(vehicles):
     output = ''
@@ -124,16 +125,13 @@ def stringify_vehicles(vehicles):
         output += '\n' + str(vehicle)
     return output
 
-inventory = Inventory('inventory.tsv')
-
-# inventory.removeItem(Car('Honda', 'Pilot', '2025', 'Grey', '23000', '4'))
-# print(inventory.data)
-
+inventory = Inventory("inventory.tsv")
 print('''Welcome to your vehicle inventory...
-You may add, remove or search for cars or motorcycles.''')   
+You may add, remove or search for cars or motorcycles.
+''')   
 
 
-ask = input('Would you like to add, remove or search for a vehicle. ')
+ask = input('Would you like to add, remove or search for a vehicle. \n')
 
 if ask == 'add':
     type = input('Type: ')
